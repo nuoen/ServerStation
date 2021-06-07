@@ -6,19 +6,31 @@ import jakarta.servlet.http.*;
 
 public class TestServlet extends HttpServlet {
     private String message;
-    public String getHello() { return "Hello Gradle Web Application"; }
-    public void init() throws ServletException{
-        //执行必须的初始化
-        message="Hello Servlet";
+
+    @Override
+    public void init() throws ServletException {
+        message = "Hello World , To Meet You: " + System.currentTimeMillis();
+        System.out.println("servlet init");
+        super.init();
     }
 
-    public void doGet(HttpServletRequest request,HttpServletResponse response)throws ServletException,IOException{
+    @Override
+    public void doGet(HttpServletRequest req, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
-        PrintWriter out=response.getWriter();
-        out.println("<h1>"+message+"<h1>");
+        PrintWriter writer = response.getWriter();
+        writer.write("<h1>" + message + "</h1>");
+        destroy();
     }
 
-    public void destroy(){
+    @Override
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        // TODO Auto-generated method stub
+        super.doPost(req, resp);
+    }
 
+    @Override
+    public void destroy() {
+        System.out.println("servlet destroy");
+        super.destroy();
     }
 }
